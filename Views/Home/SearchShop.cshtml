@@ -1,0 +1,32 @@
+﻿@{
+    Layout = null;
+}
+@model IEnumerable<TradeShop.Models.TaiKhoan>
+
+<div class="shopee-search-user-brief">
+    <h5 style="padding: 10px 20px;">Shop liên quan đến <span style="color: red;">`@ViewBag.searchString`</span></h5>
+    <div class="d-flex" style="justify-content: space-between; margin-bottom: 10px;">
+        @foreach (var item in Model)
+        {
+            <div class="shopee-header-section__content" style="width: 49%;">
+                <div class="shopee-search-user-item shopee-search-user-item--short">
+                    <div class="shopee-search-user-item__leading">
+                        <div class="shopee-avt_img">
+                            <div style="width: 8rem; height: 8rem">
+                                <div class="avt_shop_placeholder" style="background-color: brown;">
+                                </div>
+                                <a href="@Url.Action("InforShop", "Home", new { shop_id = item.id_user })">
+                                    <img class="avt_shop" src="https://cdn.donmai.us/sample/dc/e2/__kamen_rider_geats_and_kamen_rider_geats_ix_kamen_rider_and_1_more_drawn_by_miyabi_037__sample-dce27a03754db30243ccc8f6c0400707.jpg" style="border-radius: 50%; object-fit: cover;">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <a class="shopee-search-user-item__shop-info" href="">
+                        <div class="shopee-search-user-item__nickname">@item.fullname</div>
+                        <div class="shopee-search-user-item__username">@item.email</div>
+                    </a>
+                </div>
+            </div>
+        }
+    </div>
+</div>

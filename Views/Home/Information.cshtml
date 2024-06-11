@@ -1,0 +1,111 @@
+﻿@model TradeShop.Models.TaiKhoan
+
+@{
+    ViewBag.Title = "Thông tin cá nhân";
+}
+<style>
+    .list_info ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        width: 235px;
+        background-color: #f1f1f1;
+    }
+
+    .list_info li a {
+        display: block;
+        color: #000;
+        padding: 15px 16px;
+        text-decoration: none;
+    }
+
+        .list_info li a.active {
+            background-color: #ee4d2d;
+            color: white;
+        }
+
+        .list_info li a:hover:not(.active) {
+            background-color: #555;
+            color: white;
+        }
+</style>
+<section class="list_info">
+    <div class="col-lg-3">
+        <ul class="list_action">
+            <li><a href="@Url.Action("Information", "Home")" class="active">Thông tin cá nhân</a></li>
+            <li><a href="@Url.Action("ListOrder", "Home")">Đơn Đặt Hàng</a></li>
+            <li><a href="@Url.Action("ManagerProduct", "Home")">Quản lý sản phẩm</a></li>
+            <li><a href="@Url.Action("ListBuy", "Home")">Đơn Mua</a></li>
+        </ul>
+    </div>
+
+    <div class="col-lg-9">
+        <div id="information" style="margin-top: 0">
+            <h3>Hồ Sơ Của Tôi</h3>
+
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-horizontal">
+                    <h5>Quản lý thông tin hồ sơ để bảo mật tài khoản</h5>
+                    <hr style="margin-top: 10px; margin-bottom: 10px;" />
+                    @if (ViewBag.ChangeSuccess != null)
+                    {
+                        <div class="alert alert-success">
+                            <strong>@ViewBag.ChangeSuccess</strong>
+                        </div>
+                    }
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <label class="control-label col-md-2">Email</label>
+                            <div class="col-md-7">
+                                <p class="control-label" style="float: left">@Model.email</p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-2">Họ tên</label>
+                            <div class="col-md-7">
+                                <input type="text" class="form-control" name="fullname" value="@Model.fullname" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-2">Địa chỉ</label>
+                            <div class="col-md-7">
+                                <input type="text" class="form-control" name="address" value="@Model.address" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-2">Số điện thoại</label>
+                            <div class="col-md-7">
+                                <input type="text" class="form-control" name="phone" value="@Model.phone" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-2">Ngày sinh</label>
+                            <div class="col-sm-3">
+                                <input class="form-control" type="date" name="birthday" value="@String.Format("{0:yyyy-MM-dd}", Model.birthday)" />
+                            </div>
+                        </div>
+                        <br />
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-2">
+                                <input type="submit" value="Cập nhật thông tin" class="btn btn-danger" />
+                            </div>
+                            <div class="col-md-3">
+                                <a href='@Url.Action("ChangePass", "Home")' style="float:right;">
+                                    <input type="button" value="Đổi mật khẩu" class="btn btn-info" />
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+

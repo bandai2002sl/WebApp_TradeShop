@@ -1,0 +1,96 @@
+﻿
+@{
+    ViewBag.Title = "Signin";
+}
+
+<section class="section">
+    <div class="margin-bottom-20">
+        <div class="wrap_background_aside margin-bottom-40 page_login">
+            <div class="wrap_background_aside margin-bottom-40">
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 col-lg-offset-3 col-md-offset-3">
+                        <div class="page-login">
+                            <h1 class="title_heads a-center"><span>Đăng ký</span></h1>
+                            <div id="login">
+                                @using (Html.BeginForm())
+                                {
+                                    @Html.ValidationSummary(true)
+
+                                    <div class="form-signup" style="color:red;">
+                                        @ViewBag.ExistAccount
+                                        @ViewBag.ExistEmail
+                                    </div>
+                                    <div class="form-signup clearfix">
+                                        <div class="row">
+                                            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                                <fieldset class="form-group">
+                                                    <label>Họ Tên <span class="required">*</span></label>
+                                                    @Html.TextBox("fullname", null, new { placeholder = "Họ tên", @class = "form-control form-control-lg" })
+                                                    @ViewData["Loi2"]
+                                                </fieldset>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                                <fieldset class="form-group">
+                                                    <label>Email <span class="required">*</span></label>
+                                                    @Html.TextBox("email", null, new { placeholder = "Email", @class = "form-control form-control-lg" })
+                                                    @ViewData["Loi6"]
+                                                </fieldset>
+                                            </div>
+                                            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                                <fieldset class="form-group">
+                                                    <label>Số Điện Thoại <span class="required">*</span></label>
+                                                    @Html.TextBox("phone", null, new { placeholder = "Số điện thoai", @class = "form-control form-control-lg" })
+                                                    @ViewData["Loi4"]
+                                                </fieldset>
+                                            </div>
+                                            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                                <fieldset class="form-group">
+                                                    <label>Địa Chỉ <span class="required">*</span></label>
+                                                    @Html.TextBox("address", null, new { placeholder = "Địa chỉ", @class = "form-control form-control-lg" })
+                                                    @ViewData["Loi5"]
+                                                </fieldset>
+                                            </div>
+                                            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+
+                                                <fieldset class="form-group">
+                                                    <label>Mật khẩu <span class="required">*</span> </label>
+                                                    <input type="password" name="password" class="form-control form-control-lg" placeholder="Mật khẩu" required="" />
+                                                    @ViewData["Loi7"]
+                                                </fieldset>
+                                            </div>
+                                            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+
+                                                <fieldset class="form-group">
+                                                    <label>Nhập Lại Mật khẩu <span class="required">*</span> </label>
+                                                    <input type="password" name="retypepass" class="form-control form-control-lg" placeholder="Nhập lại mật khẩu" required="" />
+                                                    @ViewData["Loi8"]
+                                                    @ViewData["Loi9"]
+                                                </fieldset>
+                                            </div>
+                                        </div>
+
+                                        <div class="section margin-top-10">
+                                            <button type="submit" value="Đăng ký" class="btn  btn-style btn_50">Đăng ký</button>
+                                            <span class="block a-center margin-top-20">Đã có tài khoản, đăng nhập <a href="@Url.Action("Login", "Home")" class="btn-link-style btn-register">tại đây</a></span>
+                                        </div>
+                                    </div>
+                                }
+                                <div class="block social-login--facebooks">
+                                    <p class="a-center">
+                                        Hoặc đăng nhập bằng
+                                    </p>
+                                    <script>function loginFacebook() { var a = { client_id: "947410958642584", redirect_uri: "https://store.mysapo.net/account/facebook_account_callback", state: JSON.stringify({ redirect_url: window.location.href }), scope: "email", response_type: "code" }, b = "https://www.facebook.com/v3.2/dialog/oauth" + encodeURIParams(a, !0); window.location.href = b } function loginGoogle() { var a = { client_id: "997675985899-pu3vhvc2rngfcuqgh5ddgt7mpibgrasr.apps.googleusercontent.com", redirect_uri: "https://store.mysapo.net/account/google_account_callback", scope: "email profile https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile", access_type: "online", state: JSON.stringify({ redirect_url: window.location.href }), response_type: "code" }, b = "https://accounts.google.com/o/oauth2/v2/auth" + encodeURIParams(a, !0); window.location.href = b } function encodeURIParams(a, b) { var c = []; for (var d in a) if (a.hasOwnProperty(d)) { var e = a[d]; null != e && c.push(encodeURIComponent(d) + "=" + encodeURIComponent(e)) } return 0 == c.length ? "" : (b ? "?" : "") + c.join("&") }</script>
+                                    <a href="javascript:void(0)" class="social-login--facebook" onclick="loginFacebook()"><img width="129px" height="37px" alt="facebook-login-button" src="//bizweb.dktcdn.net/assets/admin/images/login/fb-btn.svg"></a>
+                                    <a href="javascript:void(0)" class="social-login--google" onclick="loginGoogle()"><img width="129px" height="37px" alt="google-login-button" src="//bizweb.dktcdn.net/assets/admin/images/login/gp-btn.svg"></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

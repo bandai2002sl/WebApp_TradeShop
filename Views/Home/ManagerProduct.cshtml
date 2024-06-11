@@ -1,0 +1,78 @@
+﻿@model TradeShop.Models.SanPham
+
+@{
+    ViewBag.Title = "Quản lý sản phẩm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="list_info">
+    <div class="col-lg-3">
+        <ul class="list_action">
+            <li><a href="@Url.Action("Information", "Home")">Thông tin cá nhân</a></li>
+            <li><a href="@Url.Action("ListOrder", "Home")">Đơn Đặt Hàng</a></li>
+            <li><a href="@Url.Action("ManagerProduct", "Home")" class="active">Quản lý sản phẩm</a></li>
+            <li><a href="@Url.Action("ListBuy", "Home")">Đơn Mua</a></li>
+        </ul>
+    </div>
+
+    <div class="col-lg-9">
+        <div class="">
+            <ul class="stardust-tabs-header">
+                <li class="stardust-tabs-header_tab">
+                    <a href="@Url.Action("ListPro", "Home")">Danh sách sản phẩm</a>
+                </li>
+                <li class="stardust-tabs-header_tab active">
+                    <a href="@Url.Action("ManagerProduct", "Home")">Cập nhật sản phẩm</a>
+                </li>
+            </ul>
+        </div>
+        <div class="tab-content">
+            <div class="tab-pane fade active in" id="manager_pro">
+                <div class="form-w3layouts">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <section class="panel">
+                                <div class="panel-body">
+                                    <div class="position-center">
+                                        @using (Html.BeginForm("ManagerProduct", "Home", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+                                        {
+                                            @Html.AntiForgeryToken()
+                                            @Html.HiddenFor(model => model.id)
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail1">Tên sản phẩm</label>
+                                                @Html.EditorFor(model => model.product_name, new { htmlAttributes = new { @class = "form-control", @style = "border-radius: 5px; border: solid 2px #4c84ff;" } })
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail1">Giá bán</label>
+                                                @Html.EditorFor(model => model.product_price, new { htmlAttributes = new { @min = 0, @class = "form-control", @style = "border-radius: 5px; border: solid 2px #4c84ff;" } })
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="exampleInputPassword1">Số lượng</label>
+                                                @Html.EditorFor(model => model.quantity, new { htmlAttributes = new { @class = "form-control", @style = "border-radius: 5px; border: solid 2px #4c84ff;" } })
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="exampleInputPassword1">Mô tả</label>
+                                                @Html.EditorFor(model => model.descrip, new { htmlAttributes = new { @class = "form-control", @style = "border-radius: 5px; border: solid 2px #4c84ff;" } })
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="exampleInputFile">Cập nhật ảnh</label>
+                                                <input type="file" name="imageUpload" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail1">Tên danh mục</label>
+                                                @Html.DropDownList("id_cat", null, "Chọn danh mục", new { @class = "form-control", @style = "width: 170px" })
+                                            </div>
+
+                                            <button type="submit" class="btn btn-info">Lưu sản phẩm</button>
+                                        }
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

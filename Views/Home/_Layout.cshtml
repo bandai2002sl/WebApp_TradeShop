@@ -1,0 +1,109 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Trang thương mại trao đổi đồ 2dnd</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="~/Content/style.css" rel="stylesheet" />
+    <link href="~/Content/2nshop.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
+</head>
+<body>
+    <header>
+        <div class="site-banner" style="background: #ee4d2d;"></div>
+        <div class="section-header-bar">
+            <div class="container">
+                <nav class="header-nav">
+                    <div class="header-nav-inner">
+                        <div class="contactDefault">
+                            <div id="contactList" class="content">
+                                <ul class="contactList">
+                                    <li><i class="fa fa-phone"></i>&nbsp;<a href="tel:+84838000000">(08) 38.000.000</a></li>
+                                    <li><i class="fa fa-envelope"></i>&nbsp;<a href="/nukeviet/contact/Cham-soc-khach-hang/">customer@mysite.com</a></li>
+                                    <li><i class="icon-yahoo"></i>&nbsp;<a href="ymsgr:SendIM?myYahoo" title="yahoo">myYahoo</a></li>
+                                    <li><i class="fa fa-skype"></i>&nbsp;<a href="skype:mySkype?call" title="skype">mySkype</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="personalArea">
+                            <div class="pull-right">
+                                <ul class="nav navbar-nav">
+                                    @if (Session["Taikhoan"] != null)
+                                    {
+                                        <li>
+                                            <a href="@Url.Action("Information", "Home")">
+                                                <i class="fa fa-user"> @(User.Identity.IsAuthenticated ? HttpContext.Current.User.Identity.Name: "Tài khoản") </i>
+                                            </a>
+                                        </li>
+
+                                        <li>
+                                            <a href="@Url.Action("Logout", "Home")">
+                                                <i class="fa fa-sign-out"> Đăng xuất </i>
+                                            </a>
+                                        </li>
+
+                                    }
+                                    else
+                                    {
+                                        <li>
+                                            <a href="@Url.Action("Login", "Home")">
+                                                <i class="fa fa-lock"> Đăng nhập</i>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="@Url.Action("Signin", "Home")">
+                                                <i class="fa fa-sign-in"> Đăng Ký</i>
+                                            </a>
+                                        </li>
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </div>
+        <div class="section-header">
+            <div class="container">
+                <div id="header">
+                    <div class="logo">
+                        <a title="" href="/"><img src="~/Assets/Images/logo.png" style="border-radius: 10px" alt=""></a>
+                    </div>
+                    <div class="center-search">
+                        <div class="searchbar">
+                            <div class="searchbar_main">
+                                @using (Html.BeginForm("Search", "Home", FormMethod.Get, new { @class = "searchbar_input" }))
+                                {
+                                    <input type="text" id="searchString" name="searchString" value="@ViewBag.searchString" placeholder="Tìm kiếm...">
+                                    <button type="submit" class="btn btn-solid-primary btn--s btn--inline search-button">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div class="right-cart">
+                        <div class="stardust-popover">
+                            @Html.Action("GiohangPartial", "Cart")
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container body-content" style="margin-top: 20px; min-height: 700px; ">
+        @RenderBody()
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,20 @@
+﻿@model IEnumerable<TradeShop.Models.DanhMuc>
+    
+    <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span>
+<script>
+    var swiper = new Swiper(".mySwiper", {
+        slidesPerView: 10,
+        grid: {
+            rows: 2,
+        },
+        spaceBetween: 0,
+        pagination: {
+            el: ".swiper-pagination",
+            clickable: true,
+        },
+        navigation: {
+            nextEl: ".swiper-next",
+            prevEl: ".swiper-prev",
+        },
+    });
+</script>

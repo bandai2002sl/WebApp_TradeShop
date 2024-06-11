@@ -1,0 +1,135 @@
+﻿@using TradeShop.Models
+@using PagedList.Mvc;
+@model PagedList.PagedList<TradeShop.Models.TaiKhoan>
+
+@{
+    ViewBag.Title = "Quản lý tài khoản khách hàng";
+    Layout = "~/Views/Shared/_Layout_admin.cshtml";
+}
+
+<div class="table-agile-info">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            Danh sách tài khoản
+        </div>
+        <div class="row w3-res-tb">
+            <div class="col-sm-5">
+
+            </div>
+            <div class="col-sm-4">
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered b-t b-light" style="border: 1px solid #ddd !important">
+                <thead>
+                    <tr>
+                        <th>Ảnh đại diện</th>
+                        <th>Họ và tên</th>
+                        <th>Email</th>
+                        <th>Thông tin liên hệ</th>
+                        <th>Lịch sử hoạt động</th>
+                        <th>Trạng thái</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="text-align: center;">
+                                <img style="width: 70px" src="~/Assets/Images/@item.avatar" alt="@item.fullname" />
+                            </td>
+                            <td><span class="text-ellipsis">@item.fullname</span></td>
+                            <td>
+                                <span class="text-ellipsis">@item.email</span>
+                            </td>
+                            <td>
+                                <span class="text-ellipsis">Địa chỉ: @item.address</span>
+                                <br/>
+                                <span class="text-ellipsis">Số điện thoại: @item.phone</span>
+                            </td>
+                            <td>
+                                <span class="text-ellipsis">
+                                    Ngày đăng ký: @String.Format("{0: HH:mm - dd/MM/yyyy}", DateTimeOffset.FromUnixTimeSeconds(item.time_register).LocalDateTime)
+                                </span><br />
+                                <span class="text-ellipsis">
+                                    Ngày cập nhật: @(item.time_update > 0 ? String.Format("{0: HH:mm - dd/MM/yyyy}", DateTimeOffset.FromUnixTimeSeconds(item.time_update).LocalDateTime) : "-----")
+                                </span>
+                            </td>
+                            <td>
+                                @if (item.status == 0)
+                                {
+                                    <span>Hoạt động</span>
+                                }
+                                else
+                                {
+                                    <span>Tạm khóa</span>
+                                }
+                            </td>
+                            <td class="text-center">
+                                @if (item.status == 0)
+                                {
+                                    <button class="btn btn-danger"
+                                            onclick="if (confirm('Bạn có chắc muốn khóa tài khoản này?') == true) {
+                                                $.ajax({
+                                                    url: '/Admin/ChangeStatusAccount',
+                                                    method: 'post',
+                                                    data: {
+                                                        id_user: @item.id_user,
+                                                        status: 1,
+                                                    },
+                                                    success: function (response) {
+                                                        if (response.Success) {
+                                                            alert('Khóa tài khoản thành công!')
+                                                            window.location.reload();
+                                                        }
+                                                        else {
+                                                            alert('Có lỗi xảy ra, vui lòng thử lại sau!!')
+                                                        }
+                                                    }
+                                                });
+                                            }">
+                                        Khóa TK
+                                    </button>
+                                }
+                                else
+                                {
+                                    <button class="btn btn-primary"
+                                            onclick="if (confirm('Bạn có chắc muốn kích hoạt tài khoản này?') == true) {
+                                                $.ajax({
+                                                    url: '/Admin/ChangeStatusAccount',
+                                                    method: 'post',
+                                                    data: {
+                                                        id_user: @item.id_user,
+                                                        status: 0,
+                                                    },
+                                                    success: function (response) {
+                                                        if (response.Success) {
+                                                            alert('Kích hoạt thành công!')
+                                                            window.location.reload();
+                                                        }
+                                                        else {
+                                                            alert('Có lỗi xảy ra, vui lòng thử lại sau!!')
+                                                        }
+                                                    }
+                                                });
+                                            }">
+                                        Kích hoạt
+                                    </button>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <footer class="panel-footer">
+            <div class="row">
+                <div class="col-sm-12 text-right text-center-xs">
+                    @Html.PagedListPager(Model, page => Url.Action("ProductManager", new { page = page }))
+                </div>
+            </div>
+        </footer>
+    </div>
+</div>
+

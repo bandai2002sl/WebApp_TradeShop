@@ -1,0 +1,65 @@
+﻿@model IEnumerable<TradeShop.Models.SanPham>
+
+@{
+    ViewBag.Title = "Trang Chủ";
+}
+
+<div class="col-md-12">
+    @Html.Action("ListCategory", "Home")
+    <section style="display: block; margin-bottom: 50px; background: #fff;">
+        <div class="stardust-tabs-header-wrapper">
+            <ul class="stardust-tabs-header">
+                <li class="stardust-tabs-header_tab active">
+                    <a href="#suggest_today" data-toggle="tab">Sản phẩm gợi ý</a>
+                </li>
+            </ul>
+        </div>
+        <div class="tab-content">
+            <div id="suggest_today" class="tab-pane fade active in">
+                <div class="row mt-3" style="--limit-column: 5" data-section="tab-section">
+                    @foreach (var item in Model)
+                    {
+                        <div class="col-lg-2 col-md-2">
+                            <div class="item_product_main">
+                                <form action="#" method="post" class="variants product-action" enctype="multipart/form-data">
+                                    <div class="product-thumbnail pos-relative">
+                                        <a class="image_thumb pos-relative embed-responsive embed-responsive-1by1" href="@Url.Action("ProductDetail", "Home", new { product_id = item.id })">
+                                            <img class="product-frame lazyload loaded" src="" alt="" data-image-scale="0.7">
+                                            <img class="lazyload img-primary loaded" src="~/Assets/Images/Products/@item.product_image" style="--image-scale: 1" alt="@item.product_name" data-was-processed="true">
+                                        </a>
+                                        <div class="product-action">
+                                            <div class="group_action">
+                                                <a title="Chi tiết" href="@Url.Action("ProductDetail", "Home", new { product_id = item.id })" class="xem_nhanh btn-circle btn-views btn_view btn right-to quick-view">
+                                                    <i class="fa fa-eye"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="product-info">
+                                        <h3 class="product-name"><a href="@Url.Action("ProductDetail", "Home", new { product_id = item.id })" title="@item.product_name">@item.product_name</a></h3>
+                                        <div class="price-box">
+                                            <span class="price">
+                                                @if (item.product_price > 0)
+                                                {
+                                                    @String.Format("{0:0,0}", item.product_price)<text>đ</text>
+                                                }
+                                                else
+                                                {
+                                                    <text>Trao đổi</text>
+                                                }
+                                            </span>
+                                        </div>
+                                        <h5 class="t-bold">@item.TaiKhoan.fullname</h5>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    }
+                </div>
+                <div class="container" style="text-align: center; padding: 40px 0;">
+                    <button class="btn btn-default" id="see_more" style="width: 35%; height: 40px;">Xem Thêm</button>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

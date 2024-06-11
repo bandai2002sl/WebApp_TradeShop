@@ -1,0 +1,127 @@
+﻿@using TradeShop.Models;
+@model List<Giohang>
+
+@{
+    ViewBag.Title = "Giỏ Hàng";
+}
+
+<div class="col-md-12" style="background-color: #fff; padding: 15px !important;">
+    <div id="main_cart">
+        <div class="product-viewlist">
+            <input type="hidden" id="userid" value="3">
+            @foreach (var item in Model)
+            {
+                <div class="panel panel-default">
+                    <span class="close" id="delete_@item.iMasp" onclick="var delete_pro = document.getElementById('delete_@item.iMasp');
+                                                                                              $.ajax({
+                                                                                                url: '/Cart/XoaGiohang',
+                                                                                                method: 'post',
+                                                                                                data: {
+                                                                                                    iMaSP: @item.iMasp
+                                                                                                },
+                                                                                                success: function (response) {
+                                                                                                    if (response.Success) {
+                                                                                                        window.location.reload();
+                                                                                                    }
+                                                                                                    else {
+                                                                                                        alert('Có lỗi xảy ra, vui lòng thử lại sau!');
+                                                                                                    }
+                                                                                                }
+                                                                                            });return false;">×</span>
+                    <div class="panel-body">
+                        <div class="d-flex" style="align-items: center">
+                            <div class="pull-left">
+                                <a href="@Url.Action("ProductDetail", "Home", new { product_id = item.iMasp })" title="@item.sTensp">
+                                    <img src="~/Assets/Images/Products/@item.sAnhbia" alt="@item.sTensp" width="120">
+                                </a>
+                            </div>
+                            <div class="details_cart">
+                                <h5>
+                                    <a href="@Url.Action("ProductDetail", "Home", new { product_id = item.iMasp })">
+                                        @item.sTensp
+                                    </a>
+                                </h5>
+                                <p class="price price-value">
+                                    Đơn giá: @String.Format("{0:0,0}", item.dDongia)đ &nbsp; <del></del>
+                                </p>
+                                <div style="display: flex; align-content: center; margin: 10px 0px;">
+                                    <input class="pull-left form-control" id="num_pro_cart_@item.iMasp" onkeypress="if ( isNaN(this.value + String.fromCharCode(event.keyCode) )) return false;" style="width: 100px" type="number" min="1" value="@item.iSoluong" 
+                                                                                    onchange="if (this.value == 0) this.value = 1;
+                                                                                              var result = document.getElementById('num_pro_cart_@item.iMasp');
+                                                                                              $.ajax({
+                                                                                                url: '/Cart/CapnhapGiohang',
+                                                                                                method: 'post',
+                                                                                                data: {
+                                                                                                    iMaSP: @item.iMasp,
+                                                                                                    soluong: result.value
+                                                                                                },
+                                                                                                success: function (response) {
+                                                                                                    if (response.Success) {
+                                                                                                        window.location.reload();
+                                                                                                    }
+                                                                                                    else {
+                                                                                                        alert('Số lượng sản phẩm không đủ!');
+                                                                                                        result.value = response.max_quantity;
+                                                                                                    }
+                                                                                                }
+                                                                                            });return false;">
+                                </div>
+                                <p>
+                                    Số tiền: @String.Format("{0:0,0}", item.dThanhtien)đ
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        <div style="display: grid;">
+            <p style="font-weight: bold; font-size: 15px;">Tổng giá trị đơn hàng: @String.Format("{0:0,0}", ViewBag.Tongtien) đ</p>
+            <p style="font-weight: bold; font-size: 15px;">Phí vận chuyển: 20,000 đ</p>
+            <p style="font-weight: bold; font-size: 15px;" id="total_payment">Tổng thanh toán: @String.Format("{0:0,0}", ViewBag.Tongtien + 20000) đ</p>
+        </div>
+    </div>
+    <div id="show_tab_info">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                @{
+                    TaiKhoan tk = (TaiKhoan)Session["Taikhoan"];
+                }
+                @using (Html.BeginForm("Dathang", "Cart", FormMethod.Post))
+                {
+                    <input type="text" hidden name="id_user" value="@tk.id_user">
+                    <table class="table table-responsive table-bordered">
+                        <tbody>
+                            <tr>
+                                <td><h5>Họ tên: </h5></td>
+                                <td><input type="text" class="pull-left form-control" name="fullname" value="@tk.fullname"></td>
+                            </tr>
+                            <tr>
+                                <td><h5>Địa chỉ: </h5></td>
+                                <td><input type="text" class="pull-left form-control" value="@tk.address" name="address"></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <h5>Số điện thoại: </h5>
+                                </td>
+                                <td>
+                                    <input type="text" class="pull-left form-control" name="phone" value="@tk.phone" oninput="this.value = this.value.replace(/[^0-9.]/g, '');">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <button style="float: right;" type="submit" class="btn btn-primary">Xác nhận đơn hàng</button>
+                }
+            </div>
+        </div>
+    </div>
+    <button id="show_form_info_order" type="button" class="btn btn-primary" style="margin: 10px 0px 50px; width: 100%;">Đặt hàng</button>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#show_form_info_order").click(function () {
+            $("#show_tab_info").slideToggle();
+        });
+    });
+</script>
+

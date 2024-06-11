@@ -1,0 +1,77 @@
+﻿@using TradeShop.Models
+@{
+    ViewBag.Title = "Danh sách sản phẩm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="list_info">
+    <div class="col-lg-3">
+        <ul class="list_action">
+            <li><a href="@Url.Action("Information", "Home")">Thông tin cá nhân</a></li>
+            <li><a href="@Url.Action("ListOrder", "Home")">Đơn Đặt Hàng</a></li>
+            <li><a href="@Url.Action("ManagerProduct", "Home")" class="active">Quản lý sản phẩm</a></li>
+            <li><a href="@Url.Action("ListBuy", "Home")">Đơn Mua</a></li>
+        </ul>
+    </div>
+
+    <div class="col-lg-9">
+        <div class="">
+            <ul class="stardust-tabs-header">
+                <li class="stardust-tabs-header_tab active">
+                    <a href="@Url.Action("ListPro", "Home")">Danh sách sản phẩm</a>
+                </li>
+                <li class="stardust-tabs-header_tab">
+                    <a href="@Url.Action("ManagerProduct", "Home")">Cập nhật sản phẩm</a>
+                </li>
+            </ul>
+        </div>
+        <div class="tab-content">
+            <div id="list_pro" class="tab-pane fade active in">
+                <div class="row mt-3" style="--limit-column: 5" data-section="tab-section">
+                    @foreach (var item in Model)
+                    {
+                        <div class="col-lg-3 col-md-3">
+                            <div class="item_product_main">
+                                <form action="#" method="post" class="variants product-action" enctype="multipart/form-data">
+                                    <div class="product-thumbnail pos-relative">
+                                        <a class="image_thumb pos-relative embed-responsive embed-responsive-1by1" href="{ROW.link_pro}">
+                                            <img class="product-frame lazyload loaded" src="" alt="" data-image-scale="0.7">
+                                            <img class="lazyload img-primary loaded" src="~/Assets/Images/Products/@item.product_image" style="--image-scale: 1" alt="@item.product_name">
+                                        </a>
+                                        <div class="product-action">
+                                            <div class="group_action">
+                                                <a title="Cập nhật sản phẩm" href="@Url.Action("ManagerProduct", "Home", new { id = item.id })" class="xem_nhanh btn-circle btn-views btn_view btn right-to quick-view">
+                                                    <i class="fa fa-edit"></i>
+                                                </a>
+                                                <a title="Xem nhanh" href="@Url.Action("ProductDetail", "Home", new { product_id = item.id })" class="xem_nhanh btn-circle btn-views btn_view btn right-to quick-view">
+                                                    <i class="fa fa-eye"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="product-info">
+                                        <h3 class="product-name" style=" -webkit-line-clamp: 1;"><a href="#" title="@item.product_name">@item.product_name</a></h3>
+
+                                        <div class="price-box">
+                                            <span class="price">
+                                                @if (item.product_price > 0)
+                                                {
+                                                    @String.Format("{0:0,0}", item.product_price)<text>đ</text>
+                                                }
+                                                else
+                                                {
+                                                    <text>Liên hệ</text>
+                                                }
+                                            </span>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

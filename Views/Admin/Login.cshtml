@@ -1,0 +1,55 @@
+﻿@{
+    Layout = null;
+}
+
+<!--
+    Author: W3layouts
+    Author URL: http://w3layouts.com
+    License: Creative Commons Attribution 3.0 Unported
+    License URL: http://creativecommons.org/licenses/by/3.0/
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Đăng nhập | Admin</title>
+    <link rel="shortcut icon" href="~/Assets/shop/favicon.ico" type="image/png">
+    <link href="~/Content/login-admin.css" rel="stylesheet" />
+    <link href="//fonts.googleapis.com/css?family=Muli:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:400,300italic,300,400italic,600,600italic,700,700italic,800,800italic' rel='stylesheet' type='text/css'>
+    <link rel="icon" href="~/Assets/Images/shop/logo.png" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="keywords" content="Capture login form  Widget Responsive, Login Form Web Template, Flat Pricing Tables, Flat Drop-Downs, Sign-Up Web Templates, Flat Web Templates, Login Sign-up Responsive Web Template, Smartphone Compatible Web Template, Free Web Designs for Nokia, Samsung, LG, Sony Ericsson, Motorola Web Design" />
+
+</head>
+<body>
+    <div class="w3layouts">
+        <div class="signin-agile">
+            <h2>Đăng nhập</h2>
+            <form action="#" method="post">
+                @using (Html.BeginForm("Login", "Admin", new { returnUrl = Request.QueryString["ReturnUrl"] }, FormMethod.Post))
+                {
+                    @Html.ValidationSummary(true)
+                    <input type="text" name="username" class="name" placeholder="Tên đăng nhập" required="">
+                    @ViewData["Loi1"]
+                    <input type="password" name="password" class="password" placeholder="Mật khẩu" required="">
+                    @ViewData["Loi2"]
+                    <ul>
+                        <li>
+                            <input type="checkbox" id="brand1" value="">
+                            <label for="brand1"><span></span>Lưu mật khẩu</label>
+                        </li>
+                    </ul>
+                    <a href="#">Quên mật khẩu?</a><br>
+                    <div class="clear"></div>
+                    <h4 style="color: red;text-align: center;">@ViewBag.ThongBao</h4>
+                    <input type="submit" value="Đăng nhập">
+                }
+            </form>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

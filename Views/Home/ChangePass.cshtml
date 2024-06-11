@@ -1,0 +1,73 @@
+﻿
+@{
+    ViewBag.Title = "Đổi mật khẩu";
+}
+
+<section class="list_info">
+    <div class="col-lg-3">
+        <ul class="list_action">
+            <li><a href="@Url.Action("Information", "Home")" class="active">Thông tin cá nhân</a></li>
+            <li><a href="@Url.Action("ListOrder", "Home")">Đơn Đặt Hàng</a></li>
+            <li><a href="@Url.Action("ManagerProduct", "Home")">Quản lý sản phẩm</a></li>
+            <li><a href="@Url.Action("ListBuy", "Home")">Đơn Mua</a></li>
+        </ul>
+    </div>
+
+    <div class="col-lg-9">
+        <div class="wrap_background_aside margin-bottom-40 page_login">
+            <div class="wrap_background_aside margin-bottom-40">
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 col-lg-offset-3 col-md-offset-3">
+                        <div class="page-login">
+                            <h1 class="title_heads a-center"><span>Đổi Mật Khẩu</span></h1>
+                            <h3 class="a-center"><p style="font-size: 14px">Để bảo mật tài khoản, vui lòng không chia sẻ mật khẩu cho người khác</p></h3>
+                            <div id="changepassword">
+                                @using (Html.BeginForm())
+                                {
+                                    @Html.ValidationSummary(true)
+
+                                    <div class="form-signup clearfix">
+                                        <div class="row">
+                                            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                                <fieldset class="form-group">
+                                                    <label> Nhập Mật Khẩu Cũ<span class="required">*</span></label>
+                                                    <input type="password" name="oldpassword" class="form-control form-control-lg" placeholder="Mật khẩu cũ"/>
+                                                    @ViewData["Loi1"]
+                                                </fieldset>
+                                            </div>
+                                            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                                <fieldset class="form-group">
+                                                    <label>Nhập Mật Khẩu Mới <span class="required">*</span></label>
+                                                    <input type="password" name="newpassword" class="form-control form-control-lg" placeholder="Mật khẩu mới"/>
+                                                    @ViewData["Loi2"]
+                                                </fieldset>
+                                            </div>
+                                            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                                <fieldset class="form-group">
+                                                    <label>Xác Nhận Mật Khẩu Mới <span class="required">*</span></label>
+                                                    <input type="password" name="retypepass" class="form-control form-control-lg" placeholder="Xác nhận mật khẩu mới"/>
+                                                    @ViewData["Loi3"]
+                                                </fieldset>
+                                            </div>
+                                        </div>
+
+                                        <div class="section margin-top-10">
+                                            <button type="submit" value="Đăng ký" class="btn btn-primary btn_50">Đổi Mât Khẩu</button>
+                                            <h4 style="color: red;text-align: center;">@ViewBag.LoiNhap</h4>
+                                            <a href='@Url.Action("Information", "Home")' style="float:right;">
+                                                <span>
+                                                    Trở về hồ sơ cá nhân
+                                                </span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

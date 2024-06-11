@@ -1,0 +1,99 @@
+﻿@using TradeShop.Models
+@using PagedList.Mvc;
+@model PagedList.PagedList<SanPham>
+
+@{
+    ViewBag.Title = "Danh mục sản phẩm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="col-md-12">
+    <div id="main" class="container-fluid" style="background: #fff; padding-top: 15px; min-height: 700px;">
+
+        <div class="shopee-sort-bar">
+            <span class="shopee-sort-bar__label">
+                Sắp xếp theo
+            </span>
+            <div class="shopee-sort-by-options">
+                <div class="shopee-sort-by-options__option">Phổ biến</div>
+                <div class="shopee-sort-by-options__option shopee-sort-by-options__option--selected">Mới nhất</div>
+                <div class="shopee-sort-by-options__option">Bán chạy</div>
+                <div>
+                    <div class="select-with-status">
+                        <div class="select-with-status__holder select-with-status__box-shadow">
+                            <span class="select-with-status__placeholder">Giá</span>
+                            <span>
+                                <svg viewBox="0 0 10 6" class="shopee-svg-icon icon-arrow-down-small">
+                                    <path d="M9.7503478 1.37413402L5.3649665 5.78112957c-.1947815.19574157-.511363.19651982-.7071046.00173827a.50153763.50153763 0 0 1-.0008702-.00086807L.2050664 1.33007451l.0007126-.00071253C.077901 1.18820749 0 1.0009341 0 .79546595 0 .35614224.3561422 0 .7954659 0c.2054682 0 .3927416.07790103.5338961.20577896l.0006632-.00066318.0226101.02261012a.80128317.80128317 0 0 1 .0105706.0105706l3.3619016 3.36190165c.1562097.15620972.4094757.15620972.5656855 0a.42598723.42598723 0 0 0 .0006944-.00069616L8.6678481.20650022l.0009529.0009482C8.8101657.07857935 8.9981733 0 9.2045341 0 9.6438578 0 10 .35614224 10 .79546595c0 .20495443-.077512.39180497-.2048207.53283641l.0003896.00038772-.0096728.00972053a.80044712.80044712 0 0 1-.0355483.03572341z" fill-rule="nonzero">
+                                    </path>
+                                </svg>
+                            </span>
+                            <div class="select-with-status__dropdown shopee-modal__transition-enter-done">
+                                <div class="select-with-status__dropdown-item select-with-status__dropdown-item--with-tick">
+                                    <a href="@Url.Action("ProductCategory", "Home", new { id_cat = ViewBag.id_cat, orderby = "ascending" })">
+                                        Giá: Thấp đến Cao
+                                    </a>
+                                </div>
+                                <div class="select-with-status__dropdown-item select-with-status__dropdown-item--with-tick">
+                                    <a href="@Url.Action("ProductCategory", "Home", new { id_cat = ViewBag.id_cat, orderby = "descending" })">
+                                        Giá: Cao đến Thấp
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-left: -10px; margin-right: -10px;">
+            @foreach (var product in Model)
+            {
+                <div class="col-lg-2-5">
+                    <div class="item_product_main">
+                        <form action="#" method="post" class="variants product-action" enctype="multipart/form-data">
+                            <div class="product-thumbnail pos-relative">
+                                <a class="image_thumb pos-relative embed-responsive embed-responsive-1by1" href="@Url.Action("ProductDetail", "Home", new { product_id = product.id })">
+                                    <img class="product-frame lazyload loaded" src="" alt="" data-image-scale="0.7">
+                                    <img class="lazyload img-primary loaded" src="~/Assets/Images/Products/@product.product_image" style="--image-scale: 1" alt="@product.product_name">
+                                </a>
+                                <div class="product-action">
+                                    <div class="group_action">
+                                        @*<button onclick="add_cart()" class="hidden-xs btn-buy btn-cart btn-left btn btn-views left-to add_to_cart active " title="Thêm vào giỏ hàng">
+                                            <i class="fa fa-cart-plus"></i>
+                                        </button>*@
+                                        <a title="Xem nhanh" href="@Url.Action("ProductDetail", "Home", new { product_id = product.id })" class="xem_nhanh btn-circle btn-views btn_view btn right-to quick-view">
+                                            <i class="fa fa-eye"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="product-info">
+                                <h3 class="product-name"><a href="@Url.Action("ProductDetail", "Home", new { product_id = product.id })" title="@product.product_name">@product.product_name</a></h3>
+
+                                <div class="price-box">
+                                    <span class="price">
+                                        @if (product.product_price > 0)
+                                        {
+                                            @String.Format("{0:0,0}", product.product_price)<text>đ</text>
+                                        }
+                                        else
+                                        {
+                                            <text>Trao đổi</text>
+                                        }
+                                    </span>
+                                </div>
+
+                                <h5 class="t-bold">@product.TaiKhoan.fullname</h5>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="container" style="text-align:center;">
+            <ul class="pagination">
+                @Html.PagedListPager(Model, page => Url.Action("ProductCategory", new { id_cat = ViewBag.id_cat, orderby = ViewBag.orderby, page = page }))
+            </ul>
+        </div>
+    </div>
+</div>
