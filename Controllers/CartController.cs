@@ -34,7 +34,7 @@ namespace TradeShop.Controllers
             else
             {
                 List<Giohang> lstGiohang = Laygiohang(); // Lấy ra Session["Giohang"]
-                Giohang sanpham = lstGiohang.Find(n => n.iMasp == iMaSP);// Kiểm tra sách này có tồn tại trong Session["Giohang"] chưa?
+                Giohang sanpham = lstGiohang.Find(n => n.iMasp == iMaSP);// Kiểm tra sp này có tồn tại trong Session["Giohang"] chưa?
                 if (sanpham == null)
                 {
                     sanpham = new Giohang(iMaSP);

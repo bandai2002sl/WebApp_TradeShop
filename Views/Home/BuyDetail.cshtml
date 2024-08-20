@@ -25,12 +25,21 @@
                 <span class="-XHRLL">
                     @if (ViewBag.status == 0)
                     {
-                        <text>Chờ giao hàng</text>
+                        <span class="_0vCgDb">Chờ xác nhận</span>
                     }
-                    else
+                    else if (ViewBag.status == 1)
                     {
-                        <text>Giao hàng thành công</text>
+                        <span class="_0vCgDb">Đang giao hàng</span>
                     }
+                    else if (ViewBag.status == 2)
+                    {
+                        <span class="_0vCgDb">Đơn hàng bị hủy</span>
+                    }
+                    else if (ViewBag.status == 3)
+                    {
+                        <span class="_0vCgDb">Giao hàng thành công</span>
+                    }
+
                 </span>
             </div>
         </div>
@@ -50,11 +59,19 @@
                                 Trạng thái:
                                 @if (ViewBag.status == 0)
                                 {
-                                    <text><strong>Chờ giao hàng</strong></text>
+                                    <span class="_0vCgDb">Chờ xác nhận</span>
                                 }
-                                else
+                                else if (ViewBag.status == 1)
                                 {
-                                    <text><strong>Giao hàng thành công</strong></text>
+                                    <span class="_0vCgDb">Đang giao hàng</span>
+                                }
+                                else if (ViewBag.status == 2)
+                                {
+                                    <span class="_0vCgDb">Đơn hàng bị hủy</span>
+                                }
+                                else if (ViewBag.status == 3)
+                                {
+                                    <span class="_0vCgDb">Giao hàng thành công</span>
                                 }
                             </p>
                         }

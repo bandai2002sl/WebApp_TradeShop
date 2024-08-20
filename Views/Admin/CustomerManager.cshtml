@@ -14,11 +14,20 @@
         </div>
         <div class="row w3-res-tb">
             <div class="col-sm-5">
-
+                @using (Html.BeginForm("CustomerManager", "Admin", FormMethod.Get))
+                {
+                    <div class="input-group">
+                        <input type="text" name="searchString" class="input-sm form-control" placeholder="Tìm kiếm theo tên" value="@ViewBag.searchString" />
+                        <span class="input-group-btn">
+                            <button type="submit" class="btn btn-sm btn-default">Tìm kiếm</button>
+                        </span>
+                    </div>
+                }
             </div>
             <div class="col-sm-4">
             </div>
         </div>
+
         <div class="table-responsive">
             <table class="table table-striped table-bordered b-t b-light" style="border: 1px solid #ddd !important">
                 <thead>
@@ -37,7 +46,7 @@
                     {
                         <tr>
                             <td class="text-align: center;">
-                                <img style="width: 70px" src="~/Assets/Images/@item.avatar" alt="@item.fullname" />
+                                <img style="width: 70px" src="https://media.dolenglish.vn/PUBLIC/MEDIA/9590ffca-47b8-43ef-98a7-742ca207ca23.jpg" alt="@item.fullname" />
                             </td>
                             <td><span class="text-ellipsis">@item.fullname</span></td>
                             <td>

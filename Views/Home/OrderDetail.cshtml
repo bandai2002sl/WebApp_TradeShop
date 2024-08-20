@@ -23,7 +23,26 @@
             <div>
                 <span>MÃ ĐƠN HÀNG @ViewBag.id_order</span>
                 <span class="EeWeLd">|</span>
-                <span class="-XHRLL">Chờ giao hàng</span>
+                <span class="-XHRLL">
+                    @switch (Model.listorder.FirstOrDefault()?.status)
+                    {
+                        case 0:
+                            <text>Chờ xác nhận</text>
+                            break;
+                        case 1:
+                            <text>Đang giao hàng</text>
+                            break;
+                        case 2:
+                            <text>Bị hủy</text>
+                            break;
+                        case 3:
+                            <text>Đã giao thành công</text>
+                            break;
+                        default:
+                            <text>Không rõ trạng thái</text>
+                            break;
+                    }
+                </span>
             </div>
         </div>
         <div id="form-print">
@@ -38,9 +57,27 @@
                             <p>Số điện thoại: @listorder.phone</p>
                             <p>Địa chỉ nhận hàng: @listorder.address</p>
                             <p id="time_deliver">Ngày giao hàng: @String.Format("{0: dd-MM-yyyy}", DateTimeOffset.FromUnixTimeSeconds(listorder.time_deliver).LocalDateTime)</p>
-                            <p id="status">Trạng thái: <strong>Chờ giao hàng</strong></p>
+                            <p id="status">Trạng thái: <strong>
+                                @switch(Model.listorder.FirstOrDefault()?.status)
+                            {
+                                case 0:
+                                    <text>Chờ xác nhận</text>
+                                    break;
+                                case 1:
+                                    <text>Đang giao hàng</text>
+                                    break;
+                                case 2:
+                                    <text>Bị hủy</text>
+                                    break;
+                                case 3:
+                                    <text>Đã giao thành công</text>
+                                    break;
+                                default:
+                                    <text>Không rõ trạng thái</text>
+                                    break;
+                            }</strong></p>
                         }
-                    </div>
+                    </div>                
                 </div>
                 <div class="panel panel-default">
                     <div class="panel-body">
@@ -61,8 +98,8 @@
                                     <p><sup><u>đ</u></sup>@String.Format("{0:0,0}", listdetail.total)</p>
                                 </div>
                             </div>
-                            <br/>
-                        }
+                            <br />
+                        } 
                     </div>
                 </div>
             </div>
@@ -86,7 +123,7 @@
             </div>
         </div>
         <div style="text-align:center;">
-            <button class="btn btn-primary" onclick="printDiv('form-print')" style="width: 20%; height: 40px; margin: 20px 0;">IN MÃ VẬN ĐƠN</button>
+            <button class="btn btn-primary" onclick="printDiv('form-print')" style="width: 20%; height: 40px; margin: 20px 0;">IN THÔNG TIN</button>
         </div>
     </div>
 </section>

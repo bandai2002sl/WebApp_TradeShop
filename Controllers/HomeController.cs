@@ -42,6 +42,7 @@ namespace TradeShop.Controllers
                                                   .ToList();
             }
 
+            ViewBag.ActiveTab = "suggest_today";
             return View(suggestedProducts);
         }
 
@@ -317,109 +318,71 @@ namespace TradeShop.Controllers
             }
             else
             {
-                int proid = (id ?? 0);
-                SanPham sp = data.SanPhams.SingleOrDefault(n => n.id == proid);
-                if (sp == null)
+                Giohang giohang = new Giohang();
+
+                if (id != null)
                 {
-                    ViewBag.id_cat = new SelectList(data.DanhMucs.ToList().OrderBy(n => n.name_cat), "id_cat", "name_cat");
-                    return View();
+                    SanPham sp = data.SanPhams.SingleOrDefault(n => n.id == id);
+                    if (sp != null)
+                    {
+                        giohang = new Giohang(sp.id);
+                    }
                 }
-                else
-                {
-                    ViewBag.id_cat = new SelectList(data.DanhMucs.ToList().OrderBy(n => n.name_cat), "id_cat", "name_cat", sp.id_cat);
-                    return View(sp);
-                }
+
+                ViewBag.id_cat = new SelectList(data.DanhMucs.ToList().OrderBy(n => n.name_cat), "id_cat", "name_cat", giohang != null ? giohang.id_seller : (int?)null);
+                return View(giohang);
             }
         }
 
         [HttpPost]
-        public ActionResult ManagerProduct(int? id, HttpPostedFileBase ImageUpload, FormCollection collection)
+        public ActionResult ManagerProduct(Giohang model, HttpPostedFileBase imageUpload, FormCollection collection)
         {
-            int proid = (id ?? 0);
-            TaiKhoan tk = (TaiKhoan)Session["Taikhoan"];
-            SanPham sanpham = new SanPham();
-
-            var tensp = collection["product_name"];
-            var gia = collection["product_price"];
-            var mota = collection["descrip"];
-            var soluong = collection["quantity"];
-            var madm = collection["id_cat"];
-            var time_add = new DateTimeOffset(DateTime.Now).ToUnixTimeSeconds();
-
-            if (proid != 0)
+            if (ModelState.IsValid)
             {
-                SanPham sp = data.SanPhams.SingleOrDefault(n => n.id == proid);
-                if (ImageUpload == null)
+                if (imageUpload == null && model.iMasp == 0)
                 {
-                    sp.product_name = tensp;
-                    sp.product_price = Convert.ToInt32(gia);
-                    sp.descrip = mota;
-                    sp.quantity = Convert.ToInt32(soluong);
-                    sp.time_edit = (int)time_add;
-                    sp.id_cat = Convert.ToInt32((madm == "") ? null : madm);
-                    if (sp.id_cat == 0)
-                    {
-                        sp.id_cat = null;
-                    }
-                    data.SubmitChanges();
+                    ViewBag.ImageUploadError = "Vui lòng chọn ảnh cho sản phẩm";
+                    ViewBag.id_cat = new SelectList(data.DanhMucs.ToList().OrderBy(n => n.name_cat), "id_cat", "name_cat", model.id_seller);
+                    return View(model);
+                }
+
+                TaiKhoan tk = (TaiKhoan)Session["Taikhoan"];
+                SanPham sanpham;
+
+                if (model.iMasp != 0)
+                {
+                    sanpham = data.SanPhams.SingleOrDefault(n => n.id == model.iMasp);
                 }
                 else
                 {
-                    if (ModelState.IsValid)
-                    {
-                        var fileName = Path.GetFileName(ImageUpload.FileName);
-                        var path = Path.Combine(Server.MapPath("~/Assets/Images/Products"), fileName);
-                        ImageUpload.SaveAs(path);
-
-                        //Lưu vào CSDL
-                        sp.product_name = tensp;
-                        sp.product_price = Convert.ToInt32(gia);
-                        sp.descrip = mota;
-                        sp.quantity = Convert.ToInt32(soluong);
-                        sp.product_image = fileName;
-                        sp.time_edit = Convert.ToInt32(time_add);
-                        sp.id_cat = Convert.ToInt32((madm == "") ? null : madm);
-
-                        if (sp.id_cat == 0)
-                        {
-                            sp.id_cat = null;
-                        }
-                        data.SubmitChanges();
-                    }
+                    sanpham = new SanPham();
+                    data.SanPhams.InsertOnSubmit(sanpham);
                 }
+
+                sanpham.product_name = model.sTensp;
+                sanpham.product_price = model.dDongia;
+                sanpham.descrip = model.descrip;
+                sanpham.quantity = model.iSoluong;
+                sanpham.id_cat = collection["id_cat"] != "" ? int.Parse(collection["id_cat"]) : (int?)null;
+                sanpham.id_user = tk.id_user;
+                sanpham.status = 0;
+
+                if (imageUpload != null)
+                {
+                    var fileName = Path.GetFileName(imageUpload.FileName);
+                    var path = Path.Combine(Server.MapPath("~/Assets/Images/Products"), fileName);
+                    imageUpload.SaveAs(path);
+                    sanpham.product_image = fileName;
+                }
+
+                data.SubmitChanges();
                 return RedirectToAction("ListPro");
             }
-            else
-            {
-                if (ModelState.IsValid)
-                {
-                    var fileName = Path.GetFileName(ImageUpload.FileName);
-                    var path = Path.Combine(Server.MapPath("~/Assets/Images/Products"), fileName);
-                    ImageUpload.SaveAs(path);
 
-                    sanpham.product_name = tensp;
-                    sanpham.product_price = Convert.ToInt32(gia);
-                    sanpham.product_image = fileName;
-                    sanpham.quantity = Convert.ToInt32(soluong);
-                    sanpham.descrip = mota;
-                    sanpham.time_add = (int)time_add;
-                    sanpham.time_edit = 0;
-                    sanpham.status = 0;
-                    sanpham.id_cat = Convert.ToInt32((madm == "") ? null : madm);
-
-                    if (sanpham.id_cat == 0)
-                    {
-                        sanpham.id_cat = null;
-                    }
-                    sanpham.id_user = tk.id_user;
-
-                    data.SanPhams.InsertOnSubmit(sanpham);
-                    data.SubmitChanges();
-                    return RedirectToAction("ListPro");
-                }
-            }
-            return RedirectToAction("ManagerProduct", "Home");
+            ViewBag.id_cat = new SelectList(data.DanhMucs.ToList().OrderBy(n => n.name_cat), "id_cat", "name_cat", model.id_seller);
+            return View(model);
         }
+
 
         public ActionResult cc(int id)
         {
@@ -440,28 +403,39 @@ namespace TradeShop.Controllers
             }
         }
 
-        public ActionResult InforShop(int shop_id, string orderby)
+        public ActionResult InforShop(int shop_id, string orderby = null, string priceFilter = null)
         {
             var listProduct = data.SanPhams.Where(x => x.id_user == shop_id);
-            if (orderby == "ascending")
+
+            // Logic sắp xếp theo giá
+            if (priceFilter == "zero")
+            {
+                listProduct = listProduct.Where(a => a.product_price == 0);
+            }
+            else if (orderby == "ascending")
             {
                 listProduct = listProduct.OrderBy(a => a.product_price);
             }
-            else
+            else if (orderby == "descending")
             {
                 listProduct = listProduct.OrderByDescending(a => a.product_price);
             }
+
             var model = new InforShopViewModel()
             {
                 inforShop = data.TaiKhoans.Where(m => m.id_user == shop_id).ToList(),
                 listProduct = listProduct.ToList(),
             };
+
             var rating_shop = data.DonDatHangs.Where(n => n.id_seller == shop_id).Average(m => (double?)m.rating);
-            ViewBag.Rating = ((rating_shop != null) ? rating_shop : 0);
+            ViewBag.Rating = rating_shop ?? 0;
             ViewBag.CountPro = data.SanPhams.Where(n => n.id_user == shop_id).Count();
             ViewBag.id_shop = shop_id;
+
             return View(model);
         }
+
+
 
         public ActionResult ListCategory()
         {
@@ -556,7 +530,7 @@ namespace TradeShop.Controllers
             }
         }
 
-        public ActionResult ProductCategory(int id_cat, string orderby, int? page)
+        public ActionResult ProductCategory(int id_cat, string orderby = null, string priceFilter = null, int? page = 1)
         {
             var danhMucList = data.DanhMucs.ToList();
             ViewBag.DanhMucList = danhMucList;
@@ -564,25 +538,37 @@ namespace TradeShop.Controllers
             int pageSize = 20;
             int pageNum = (page ?? 1);
 
-            var product = from p in data.SanPhams where p.id_cat == id_cat select p;
+            var product = data.SanPhams.Where(p => p.id_cat == id_cat);
+
             if (Session["Taikhoan"] != null)
             {
                 TaiKhoan tk = (TaiKhoan)Session["Taikhoan"];
                 product = product.Where(m => m.id_user != tk.id_user);
             }
-            if (orderby == "ascending")
+
+            if (!string.IsNullOrEmpty(priceFilter) && priceFilter == "zero")
+            {
+                product = product.Where(a => a.product_price == 0);
+            }
+            
+            else if (!string.IsNullOrEmpty(orderby) && orderby == "ascending")
             {
                 product = product.OrderBy(a => a.product_price);
             }
-            else
+            else if (!string.IsNullOrEmpty(orderby) && orderby == "descending")
             {
                 product = product.OrderByDescending(a => a.product_price);
             }
+
             ViewBag.Page = pageNum;
             ViewBag.id_cat = id_cat;
             ViewBag.orderby = orderby;
+            ViewBag.priceFilter = priceFilter;
+
             return View(product.ToPagedList(pageNum, pageSize));
         }
+
+
 
         public ActionResult Search(string searchString, string orderby, int? page)
         {
@@ -698,6 +684,43 @@ namespace TradeShop.Controllers
             }
             return Json(new { Success = isSuccess });
         }
+        public ActionResult FreeProducts()
+        {
+            var freeProducts = data.SanPhams.Where(p => p.product_price == 0).ToList();
+            ViewBag.ActiveTab = "free_products";
+            return View("Index", freeProducts);
+        }
+        public ActionResult CustomerManager(string searchString, int? page)
+        {
+            int pageSize = 20;
+            int pageNumber = (page ?? 1);
+
+            var customers = from c in data.TaiKhoans select c;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                customers = customers.Where(s => s.fullname.Contains(searchString));
+            }
+            
+            ViewBag.searchString = searchString;
+            return View(customers.OrderBy(c => c.id_user).ToPagedList(pageNumber, pageSize));
+        }
+
+        public ActionResult ProductManager(string tukhoa, int? page)
+        {
+            int pageSize = 20;
+            int pageNumber = (page ?? 1);
+
+            var products = from p in data.SanPhams select p;
+
+            if (!String.IsNullOrEmpty(tukhoa))
+            {
+                products = products.Where(s => s.product_name.Contains(tukhoa));
+            }
+
+            ViewBag.tukhoa = tukhoa;
+            return View(products.OrderBy(p => p.id).ToPagedList(pageNumber, pageSize));
+        }
 
         [HttpPost]
         public JsonResult CancelOrder(int iMaDH)
@@ -717,5 +740,7 @@ namespace TradeShop.Controllers
         {
             return View();
         }
+
+
     }
 }

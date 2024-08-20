@@ -1,9 +1,23 @@
-﻿@model TradeShop.Models.SanPham
+﻿@model TradeShop.Models.Giohang
 
 @{
     ViewBag.Title = "Quản lý sản phẩm";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+<style>
+    .required-label::after {
+        content: "*";
+        color: red;
+        margin-left: 5px;
+    }
+
+    .field-note {
+        display: block;
+        color: red;
+        font-size: 0.9em;
+    }
+</style>
 
 <section class="list_info">
     <div class="col-lg-3">
@@ -37,30 +51,48 @@
                                         @using (Html.BeginForm("ManagerProduct", "Home", FormMethod.Post, new { @enctype = "multipart/form-data" }))
                                         {
                                             @Html.AntiForgeryToken()
-                                            @Html.HiddenFor(model => model.id)
+                                            @Html.HiddenFor(model => model.iMasp)
+
                                             <div class="form-group">
-                                                <label for="exampleInputEmail1">Tên sản phẩm</label>
-                                                @Html.EditorFor(model => model.product_name, new { htmlAttributes = new { @class = "form-control", @style = "border-radius: 5px; border: solid 2px #4c84ff;" } })
+                                                <label for="product_name" class="required-label">Tên sản phẩm</label>
+                                                @Html.EditorFor(model => model.sTensp, new { htmlAttributes = new { @class = "form-control", @style = "border-radius: 5px; border: solid 2px #4c84ff;" } })
+                                                @Html.ValidationMessageFor(model => model.sTensp, "", new { @class = "text-danger" })
+                                           
                                             </div>
+
                                             <div class="form-group">
-                                                <label for="exampleInputEmail1">Giá bán</label>
-                                                @Html.EditorFor(model => model.product_price, new { htmlAttributes = new { @min = 0, @class = "form-control", @style = "border-radius: 5px; border: solid 2px #4c84ff;" } })
+                                                <label for="product_price" class="required-label">Giá bán</label>
+                                                @Html.EditorFor(model => model.dDongia, new { htmlAttributes = new { @min = 0, @class = "form-control", @style = "border-radius: 5px; border: solid 2px #4c84ff;" } })
+                                                @Html.ValidationMessageFor(model => model.dDongia, "", new { @class = "text-danger" })
+                                                <small class="field-note"> (đơn vị: VNĐ)</small>
                                             </div>
+
                                             <div class="form-group">
-                                                <label for="exampleInputPassword1">Số lượng</label>
-                                                @Html.EditorFor(model => model.quantity, new { htmlAttributes = new { @class = "form-control", @style = "border-radius: 5px; border: solid 2px #4c84ff;" } })
+                                                <label for="quantity" class="required-label">Số lượng</label>
+                                                @Html.EditorFor(model => model.iSoluong, new { htmlAttributes = new { @class = "form-control", @style = "border-radius: 5px; border: solid 2px #4c84ff;" } })
+                                                @Html.ValidationMessageFor(model => model.iSoluong, "", new { @class = "text-danger" })
+                                                <small class="field-note">Số lượng mặc định bằng 0 tương đương với hết hàng!</small>
                                             </div>
+
                                             <div class="form-group">
-                                                <label for="exampleInputPassword1">Mô tả</label>
+                                                <label for="descrip" class="required-label">Mô tả</label>
                                                 @Html.EditorFor(model => model.descrip, new { htmlAttributes = new { @class = "form-control", @style = "border-radius: 5px; border: solid 2px #4c84ff;" } })
+                                                @Html.ValidationMessageFor(model => model.descrip, "", new { @class = "text-danger" }) 
                                             </div>
+
                                             <div class="form-group">
-                                                <label for="exampleInputFile">Cập nhật ảnh</label>
+                                                <label for="exampleInputFile" class="required-label">Cập nhật ảnh</label>
                                                 <input type="file" name="imageUpload" />
+                                                @if (ViewBag.ImageUploadError != null)
+                                                {
+                                                    <span class="text-danger">@ViewBag.ImageUploadError</span>
+                                                }
                                             </div>
+
                                             <div class="form-group">
-                                                <label for="exampleInputEmail1">Tên danh mục</label>
-                                                @Html.DropDownList("id_cat", null, "Chọn danh mục", new { @class = "form-control", @style = "width: 170px" })
+                                                <label for="id_cat" class="required-label">Tên danh mục</label>
+                                                @Html.DropDownList("id_cat", ViewBag.id_cat as SelectList, new { @class = "form-control", @style = "width: 170px" })
+                                                <small class="field-note">Vui lòng chọn danh mục sản phẩm</small>
                                             </div>
 
                                             <button type="submit" class="btn btn-info">Lưu sản phẩm</button>
@@ -75,4 +107,3 @@
         </div>
     </div>
 </section>
-

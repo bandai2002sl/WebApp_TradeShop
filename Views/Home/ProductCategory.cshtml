@@ -15,9 +15,16 @@
                 Sắp xếp theo
             </span>
             <div class="shopee-sort-by-options">
-                <div class="shopee-sort-by-options__option">Phổ biến</div>
-                <div class="shopee-sort-by-options__option shopee-sort-by-options__option--selected">Mới nhất</div>
-                <div class="shopee-sort-by-options__option">Bán chạy</div>
+                <div class="shopee-sort-by-options__option">
+                    <a href="@Url.Action("ProductCategory", "Home", new { id_cat = ViewBag.id_cat })">
+                        Mới nhất
+                    </a>
+                </div>
+                <div class="shopee-sort-by-options__option">
+                    <a href="@Url.Action("ProductCategory", "Home", new { id_cat = ViewBag.id_cat, priceFilter = "zero" })">
+                        Miễn phí
+                    </a>
+                </div>
                 <div>
                     <div class="select-with-status">
                         <div class="select-with-status__holder select-with-status__box-shadow">
@@ -44,7 +51,9 @@
                     </div>
                 </div>
             </div>
+
         </div>
+
         <div class="row" style="margin-left: -10px; margin-right: -10px;">
             @foreach (var product in Model)
             {
@@ -78,7 +87,7 @@
                                         }
                                         else
                                         {
-                                            <text>Trao đổi</text>
+                                            <text>Miễn phí</text>
                                         }
                                     </span>
                                 </div>
@@ -92,8 +101,10 @@
         </div>
         <div class="container" style="text-align:center;">
             <ul class="pagination">
-                @Html.PagedListPager(Model, page => Url.Action("ProductCategory", new { id_cat = ViewBag.id_cat, orderby = ViewBag.orderby, page = page }))
+                @Html.PagedListPager(Model, page => Url.Action("ProductCategory", new { id_cat = ViewBag.id_cat, orderby = ViewBag.orderby, priceFilter = ViewBag.priceFilter, page = page }))
             </ul>
         </div>
+
+
     </div>
 </div>

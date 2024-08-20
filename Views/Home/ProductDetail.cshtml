@@ -26,14 +26,14 @@
                             <span class="first_status status_2">
                                 Tình trạng:
                                 <span class="status_name available hasvariant">
-                                @if (Model.quantity > 0)
-                                {
-                                    <text>Còn hàng</text>
-                                }
-                                else 
-                                {
-                                    <text>Hết hàng</text>
-                                }
+                                    @if (Model.quantity > 0)
+                                    {
+                                        <text>Còn hàng</text>
+                                    }
+                                    else
+                                    {
+                                        <text>Hết hàng</text>
+                                    }
                                 </span>
                                 <span class="line">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
                             </span>
@@ -51,7 +51,7 @@
                                     }
                                     else
                                     {
-                                        <text>Trao đổi</text>
+                                        <text>Miễn phí</text>
                                     }
                                 </span>
                             </span>
@@ -83,20 +83,21 @@
                                         </div>
 
                                         <hr />
-                                        <span>Mô tả: <br/>
-                                              @Model.descrip
+                                        <span>
+                                            Mô tả: <br />
+                                            @Model.descrip
                                         </span>
                                         <hr />
 
                                         <div style="margin-top: 15px;">
                                             <div class="_2LulQ0">
                                                 <div class="button_actions">
-                                                    <button id="btn_add_cart" type="submit" @if(Model.id_user ==  ViewBag.iduser ) {<text>disabled</text>} class="btn btn_base btn_add_cart btn-cart add_to_cart">
+                                                    <button id="btn_add_cart" type="submit" @if (Model.id_user == ViewBag.iduser) { <text> disabled</text>} class="btn btn_base btn_add_cart btn-cart add_to_cart">
                                                         <span class="text_1">Thêm vào giỏ hàng</span>
                                                     </button>@*
-                                                    <button type="button" class="btn btn-solid-primary btn--l vQ3lCI" aria-disabled="false">
-                                                        <span>Mua ngay</span>
-                                                    </button>*@
+                            <button type="button" class="btn btn-solid-primary btn--l vQ3lCI" aria-disabled="false">
+                                <span>Mua ngay</span>
+                            </button>*@
                                                 </div>
                                             </div>
                                         </div>
@@ -104,6 +105,12 @@
                                 }
                                 else
                                 {
+                                    <hr />
+                                    <span>
+                                        Mô tả: <br />
+                                        @Model.descrip
+                                    </span>
+                                    <hr />
                                     <div style="margin-top: 15px;">
                                         <div class="_2LulQ0">
                                             <div class="button_actions">
@@ -117,8 +124,8 @@
                                 <div style="margin-top: 30px; border-top: 1px solid rgba(0, 0, 0, 0.05); bottom: 0">
                                     <a target="_blank" rel="noopener noreferrer nofollow" class="iN1yyt flex items-center" href="https://shopee.vn/m/shopee-dam-bao">
                                         <img src="https://deo.shopeemobile.com/shopee/shopee-pcmall-live-sg/productdetailspage/83e10a1f95cb083579c089448ef8dd3b.png" class="_4b8YBs">
-                                        <span class="UH7zPp">KHÔNG HÀNG CẤM - MỌI GIAO DỊCH ĐỀU LÀ TỰ NGUYỆN</span>
-                                        <span>KHÔNG HÀNG CẤM - MỌI GIAO DỊCH ĐỀU LÀ TỰ NGUYỆN</span>
+                                        <span class="UH7zPp">KHÔNG HÀNG CẤM - GIAO DỊCH ĐỀU LÀ TỰ NGUYỆN</span>
+                                        <span>BẢO VỆ BẢN THÂN TRƯỚC CÁC RỦI RO</span>
                                     </a>
                                 </div>
                             </div>
@@ -135,7 +142,7 @@
                             <div class="avt_shop_placeholder">
                             </div>
                             <a href="@Url.Action("InforShop", "Home", new { shop_id = Model.TaiKhoan.id_user })">
-                                <img class="avt_shop" src="https://cdn.donmai.us/sample/dc/e2/__kamen_rider_geats_and_kamen_rider_geats_ix_kamen_rider_and_1_more_drawn_by_miyabi_037__sample-dce27a03754db30243ccc8f6c0400707.jpg" style="border-radius: 50%; object-fit: cover;">
+                                <img class="avt_shop" src="https://media.dolenglish.vn/PUBLIC/MEDIA/9590ffca-47b8-43ef-98a7-742ca207ca23.jpg" style="border-radius: 50%; object-fit: cover;">
                             </a>
                         </div>
                     </div>
@@ -146,7 +153,7 @@
                             <span>online</span>
                         </div>
                         <div class="select_button">
-                            <button onclick="window.open('https://zalo.me/@Model.TaiKhoan.phone', '_blank')",  type="button" class="btn btn-tinted">
+                            <button onclick="window.open('https://zalo.me/@Model.TaiKhoan.phone', '_blank')" , type="button" class="btn btn-tinted">
                                 <svg viewBox="0 0 16 16" class="shopee-svg-icon pa-h8D">
                                     <g fill-rule="evenodd">
                                         <path d="M15 4a1 1 0 01.993.883L16 5v9.932a.5.5 0 01-.82.385l-2.061-1.718-8.199.001a1 1 0 01-.98-.8l-.016-.117-.108-1.284 8.058.001a2 2 0 001.976-1.692l.018-.155L14.293 4H15zm-2.48-4a1 1 0 011 1l-.003.077-.646 8.4a1 1 0 01-.997.923l-8.994-.001-2.06 1.718a.5.5 0 01-.233.108l-.087.007a.5.5 0 01-.492-.41L0 11.732V1a1 1 0 011-1h11.52zM3.646 4.246a.5.5 0 000 .708c.305.304.694.526 1.146.682A4.936 4.936 0 006.4 5.9c.464 0 1.02-.062 1.608-.264.452-.156.841-.378 1.146-.682a.5.5 0 10-.708-.708c-.185.186-.445.335-.764.444a4.004 4.004 0 01-2.564 0c-.319-.11-.579-.258-.764-.444a.5.5 0 00-.708 0z">
@@ -161,7 +168,7 @@
                                         <path d="m13 1.9c-.2-.5-.8-1-1.4-1h-8.4c-.6.1-1.2.5-1.4 1l-1.4 4.3c0 .8.3 1.6.9 2.1v4.8c0 .6.5 1 1.1 1h10.2c.6 0 1.1-.5 1.1-1v-4.6c.6-.4.9-1.2.9-2.3zm-11.4 3.4 1-3c .1-.2.4-.4.6-.4h8.3c.3 0 .5.2.6.4l1 3zm .6 3.5h.4c.7 0 1.4-.3 1.8-.8.4.5.9.8 1.5.8.7 0 1.3-.5 1.5-.8.2.3.8.8 1.5.8.6 0 1.1-.3 1.5-.8.4.5 1.1.8 1.7.8h.4v3.9c0 .1 0 .2-.1.3s-.2.1-.3.1h-9.5c-.1 0-.2 0-.3-.1s-.1-.2-.1-.3zm8.8-1.7h-1v .1s0 .3-.2.6c-.2.1-.5.2-.9.2-.3 0-.6-.1-.8-.3-.2-.3-.2-.6-.2-.6v-.1h-1v .1s0 .3-.2.5c-.2.3-.5.4-.8.4-1 0-1-.8-1-.8h-1c0 .8-.7.8-1.3.8s-1.1-1-1.2-1.7h12.1c0 .2-.1.9-.5 1.4-.2.2-.5.3-.8.3-1.2 0-1.2-.8-1.2-.9z">
                                         </path>
                                     </svg>
-                                    Xem Shop
+                                    Xem trang
                                 </button>
                             </a>
                         </div>
@@ -209,7 +216,7 @@
                         </div>
                     </div>
 
-                    <div class="section-seller-overview__item">
+                    @*<div class="section-seller-overview__item">
                         <div class="section-seller-overview__item-icon-wrapper">
                             <svg enable-background="new 0 0 15 15" viewBox="0 0 15 15" x="0" y="0" class="shopee-svg-icon">
                                 <g>
@@ -219,18 +226,19 @@
                                     <path d="m9.5 1.2c1.9 0 3.5 1.6 3.5 3.5 0 1.4-.9 2.7-2.1 3.2" fill="none" stroke-linecap="round" stroke-miterlimit="10"></path>
                                 </g>
                             </svg>
-                            <div class="section-seller-overview__item-text">
+                            @*<div class="section-seller-overview__item-text">
                                 <div class="section-seller-overview__item-text-name">Người theo dõi:&nbsp;</div>
                                 <div class="section-seller-overview__item-text-value"></div>
                             </div>
                         </div>
-                    </div>
+                    </div>*@
                 </div>
             </div>
             <div class="page_product_content">
             </div>
         </div>
-        <section style="display: block;">
+
+        @*<section style="display: block;">
             <div class="stardust-tabs-header-wrapper">
                 <ul class="stardust-tabs-header">
                     <li class="stardust-tabs-header_tab active">
@@ -239,7 +247,7 @@
                 </ul>
             </div>
             <div class="tab-content" style="min-height: 600px; border: 1px solid black; border-radius: 5px;">
-                @*<div id="rate" class="tab-pane fade active in">
+              <div id="rate" class="tab-pane fade active in">
                     <div class="col-sm-24" style="padding: 10px 20px;">
                         <div class="darker">
                             <h5>Nguyễn Huy Hoàng</h5>
@@ -282,8 +290,8 @@
                             <p>Hay á, cho 5 * :&gt;&gt;</p>
                         </div>
                     </div>
-                </div>*@
-            </div>
-        </section>
+                </div>
+        </div>
+            </section>*@
     </div>
 </div>

@@ -20,20 +20,18 @@
         </div>
         <div class="row w3-res-tb">
             <div class="col-sm-5">
-
+                @using (Html.BeginForm("CustomerManager", "Admin", FormMethod.Get))
+                {
+                    <div class="input-group">
+                        <input type="text" name="searchString" class="input-sm form-control" placeholder="Tìm kiếm theo tên" value="@ViewBag.searchString" />
+                        <span class="input-group-btn">
+                            <button type="submit" class="btn btn-sm btn-default">Tìm kiếm</button>
+                        </span>
+                    </div>
+                }
             </div>
             <div class="col-sm-4">
             </div>
-            @*<div class="col-sm-3">
-                <div class="input-group">
-                    <form action="" method="get">
-                        <span class="input-group-btn" style="padding-right: 80px;">
-                            <input type="search" class="input-sm form-control" name="tukhoa" placeholder="Tìm kiếm...">
-                            <button class="btn btn-sm btn-default" type="submit">Tìm kiếm!</button>
-                        </span>
-                    </form>
-                </div>
-            </div>*@
         </div>
         <div class="table-responsive">
             <table class="table table-striped table-bordered b-t b-light" style="border: 1px solid #ddd !important">

@@ -18,7 +18,7 @@
                         <a class="section-seller-overview-horizontal__seller-portrait-link">
                             <div class="shopee-avatar _1a-fH5">
                                 <div class="shopee-avatar__placeholder"></div>
-                                <img class="shopee-avatar__img" src="https://cdn.donmai.us/sample/dc/e2/__kamen_rider_geats_and_kamen_rider_geats_ix_kamen_rider_and_1_more_drawn_by_miyabi_037__sample-dce27a03754db30243ccc8f6c0400707.jpg">
+                                <img class="shopee-avatar__img" src="https://media.dolenglish.vn/PUBLIC/MEDIA/9590ffca-47b8-43ef-98a7-742ca207ca23.jpg">
                             </div>
                         </a>
                         <div class="section-seller-overview-horizontal__portrait-info">
@@ -31,7 +31,7 @@
                         </div>
                     </div>
                     <div class="section-seller-overview-horizontal__buttons">
-                        <a class="section-seller-overview-horizontal__button">
+                        @*<a class="section-seller-overview-horizontal__button">
                             <button class="shopee-button-outline shopee-button-outline--complement shopee-button-outline--fill">
                                 <span class="section-seller-overview-horizontal__icon">
                                     <svg enable-background="new 0 0 10 10" viewBox="0 0 10 10" x="0" y="0" class="shopee-svg-icon icon-plus-sign">
@@ -39,7 +39,7 @@
                                     </svg>
                                 </span>theo dõi
                             </button>
-                        </a>
+                        </a>*@
                         <a argettype="chatButton" class="section-seller-overview-horizontal__button">
                             <button onclick="window.open('https://zalo.me/@inforshop.phone', '_blank')" class="shopee-button-outline shopee-button-outline--complement shopee-button-outline--fill">
                                 <span class="section-seller-overview-horizontal__icon">
@@ -97,7 +97,7 @@
                     </div>
                 </div>
 
-                <div class="section-seller-overview__item">
+                @*<div class="section-seller-overview__item">
                     <div class="section-seller-overview__item-icon-wrapper">
                         <svg enable-background="new 0 0 15 15" viewBox="0 0 15 15" x="0" y="0" class="shopee-svg-icon">
                             <g>
@@ -112,7 +112,7 @@
                             <div class="section-seller-overview__item-text-value"></div>
                         </div>
                     </div>
-                </div>
+                </div>*@
             </div>
         </div>
         <div class="stardust-tabs-header-wrapper" style="background: transparent; border: none;">
@@ -154,9 +154,16 @@
                                     Sắp xếp theo
                                 </span>
                                 <div class="shopee-sort-by-options">
-                                    <div class="shopee-sort-by-options__option">Phổ biến</div>
-                                    <div class="shopee-sort-by-options__option shopee-sort-by-options__option--selected">Mới nhất</div>
-                                    <div class="shopee-sort-by-options__option">Bán chạy</div>
+                                    <div class="shopee-sort-by-options__option">
+                                        <a href="@Url.Action("InforShop", "Home", new { shop_id = ViewBag.id_shop })">
+                                            Mới nhất
+                                        </a>
+                                    </div>                              
+                                    <div class="shopee-sort-by-options__option">
+                                        <a href="@Url.Action("InforShop", "Home", new { shop_id = ViewBag.id_shop, priceFilter = "zero" })">
+                                            Miễn phí
+                                        </a>
+                                    </div>
                                     <div>
                                         <div class="select-with-status">
                                             <div class="select-with-status__holder select-with-status__box-shadow">
@@ -183,43 +190,48 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row" style="margin-left: -10px; margin-right: -10px;">
-                                @foreach (var product in Model.listProduct)
-                                {
-                                    <div class="col-lg-2-5">
-                                        <div class="item_product_main">
-                                            <form action="#" method="post" class="variants product-action" enctype="multipart/form-data">
-                                                <div class="product-thumbnail pos-relative">
-                                                    <a class="image_thumb pos-relative embed-responsive embed-responsive-1by1" href="@Url.Action("ProductDetail", "Home", new { product_id = product.id })">
-                                                        <img class="product-frame lazyload loaded" src="" alt="" data-image-scale="0.7" data-was-processed="true">
-                                                        <img class="lazyload img-primary loaded" src="~/Assets/Images/Products/@product.product_image" style="--image-scale: 1" alt="@product.product_name">
-                                                    </a>
-                                                    <div class="product-action">
-                                                        <div class="group_action">
-                                                            @*<button type="button" onclick="add_cart(@product.id)" class="hidden-xs btn-buy btn-cart btn-left btn btn-views left-to add_to_cart active" title="Thêm vào giỏ hàng">
-                                                                <i class="fa fa-cart-plus"></i>
-                                                            </button>*@
-                                                            <a title="Xem nhanh" href="@Url.Action("ProductDetail", "Home", new { product_id = product.id })" class="xem_nhanh btn-circle btn-views btn_view btn right-to quick-view">
-                                                                <i class="fa fa-eye"></i>
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="product-info">
-                                                    <h3 class="product-name"><a href="@Url.Action("ProductDetail", "Home", new { product_id = product.id })" title="@product.product_name">@product.product_name</a></h3>
 
-                                                    <div class="price-box">
-                                                        <span class="price">@String.Format("{0:0,0}", product.product_price)đ</span>
+
+                            </div>
+                            </div>
+                        <div class="row" style="margin-left: -10px; margin-right: -10px;">
+                            @foreach (var product in Model.listProduct)
+                            {
+                                <div class="col-lg-2-5">
+                                    <div class="item_product_main">
+                                        <form action="#" method="post" class="variants product-action" enctype="multipart/form-data">
+                                            <div class="product-thumbnail pos-relative">
+                                                <a class="image_thumb pos-relative embed-responsive embed-responsive-1by1" href="@Url.Action("ProductDetail", "Home", new { product_id = product.id })">
+                                                    <img class="product-frame lazyload loaded" src="" alt="" data-image-scale="0.7" data-was-processed="true">
+                                                    <img class="lazyload img-primary loaded" src="~/Assets/Images/Products/@product.product_image" style="--image-scale: 1" alt="@product.product_name">
+                                                </a>
+                                                <div class="product-action">
+                                                    <div class="group_action">                                                  
+                                                        <a title="Xem nhanhd" href="@Url.Action("ProductDetail", "Home", new { product_id = product.id })" class="xem_nhanh btn-circle btn-views btn_view btn right-to quick-view">
+                                                            <i class="fa fa-eye"></i>
+                                                        </a>
                                                     </div>
                                                 </div>
-                                            </form>
-                                        </div>
+                                            </div>
+                                            <div class="product-info">
+                                                <h3 class="product-name"><a href="@Url.Action("ProductDetail", "Home", new { product_id = product.id })" title="@product.product_name">@product.product_name</a></h3>
+                                                <div class="price-box">
+                                                    @if (product.product_price > 0)
+                                                    {
+                                                        @String.Format("{0:0,0}", product.product_price)<text>đ</text>
+                                                    }
+                                                    else
+                                                    {
+                                                        <text>Miễn phí</text>
+                                                    }
+                                                    
+                                                </div>
+                                            </div>
+                                        </form>
                                     </div>
-                                }
-                            </div>
+                                </div>
+                            }
                         </div>
-                    </div>
                 </div>
             </div>
 
